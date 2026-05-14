@@ -4,12 +4,12 @@
 # -------------------------------------------------------
 set -euo pipefail
 
-CKPOOL_CONF="${CKPOOL_CONF:-/zero/ckpool/conf/ckpool.conf}"
-CKDB_CONF="${CKDB_CONF:-/zero/ckpool/conf/ckdb.conf}"
-CKDB_SOCKDIR="${CKDB_SOCKDIR:-/zero/ckpool/run/ckdb}"
-CKPOOL_SOCKDIR="${CKPOOL_SOCKDIR:-/zero/ckpool/run/ckpool}"
-CKPOOL_LOGDIR="${CKPOOL_LOGDIR:-/zero/ckpool/log}"
-CKDB_LOGDIR="${CKDB_LOGDIR:-/zero/ckpool/log}"
+CKPOOL_CONF="${CKPOOL_CONF:-/zero/.pools/ckpool/conf/ckpool.conf}"
+CKDB_CONF="${CKDB_CONF:-/zero/ckpool/.pools/conf/ckdb.conf}"
+CKDB_SOCKDIR="${CKDB_SOCKDIR:-/zero/ckpool/.pools/run/ckdb}"
+CKPOOL_SOCKDIR="${CKPOOL_SOCKDIR:-/zero/ckpool/.pools/run/ckpool}"
+CKPOOL_LOGDIR="${CKPOOL_LOGDIR:-/zero/ckpool/.pools/log}"
+CKDB_LOGDIR="${CKDB_LOGDIR:-/zero/ckpool/.pools/log}"
 
 log() { echo "[entrypoint] $*"; }
 
