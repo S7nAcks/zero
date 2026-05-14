@@ -51,8 +51,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # ── create dedicated user ─────────────────────────────
-RUN groupadd --gid 1000 ckpool \
-    && useradd --uid 1000 --gid 1000 --no-create-home ckpool
+RUN groupadd -r ckpool \
+    && useradd -r -g ckpool --no-create-home ckpool
 
 # ── copy binaries from builder ────────────────────────
 COPY --from=builder "/staging/zero/ckpool/bin/ckpool"  "/zero/ckpool/bin/ckpool"
