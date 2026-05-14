@@ -70,7 +70,10 @@ COPY --from=builder "/zero/ckpool/src/ckpmsg"    "/zero/ckpool/ckpmsg"
 COPY --from=builder "/zero/ckpool/src/notifier"  "/zero/ckpool/notifier"
 
 # ── directories ───────────────────────────────────────
-RUN mkdir -p "/zero/ckpool/log" \
+RUN mkdir -p \
+        "/zero/ckpool/log" \
+        "/zero/ckpool/sockets/ckpool" \
+        "/zero/ckpool/sockets/ckdb" \
     && chown -R ckpool:ckpool "/zero/ckpool"
 
 # PATH so binaries are callable without full path
