@@ -20,8 +20,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libzmq3-dev \
         pkg-config \
         yasm \
-    && corepack enable \
-    && corepack prepare pnpm@latest --activate \
     && npm install -g pnpm \
     && rm -rf /var/lib/apt/lists/*
 
