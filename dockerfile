@@ -103,9 +103,9 @@ RUN chown -R ckpool:ckpool "/zero/ckstats"
 
 # ── crontab for ckstats ingestion ─────────────────────
 # seed + update-users every minute, cleanup every 2 hours
-RUN    echo '*/1 * * * * ckpool cd /zero/ckstats && /usr/bin/node scripts/seed.js        >> /var/log/ckstats/seed.log    2>&1' >  /etc/cron.d/ckstats \
-    && echo '*/1 * * * * ckpool cd /zero/ckstats && /usr/bin/node scripts/updateUsers.js >> /var/log/ckstats/users.log   2>&1' >> /etc/cron.d/ckstats \
-    && echo '5 */2 * * * ckpool cd /zero/ckstats && /usr/bin/node scripts/cleanup.js     >> /var/log/ckstats/cleanup.log 2>&1' >> /etc/cron.d/ckstats \
+RUN    echo '*/1 * * * * ckpool cd /zero/ckstats && /usr/bin/node scripts/seed.js        >> /zero/ckstats/logs/seed.log    2>&1' >  /etc/cron.d/ckstats \
+    && echo '*/1 * * * * ckpool cd /zero/ckstats && /usr/bin/node scripts/updateUsers.js >> /zero/ckstats/logs/users.log   2>&1' >> /etc/cron.d/ckstats \
+    && echo '5 */2 * * * ckpool cd /zero/ckstats && /usr/bin/node scripts/cleanup.js     >> /zero/ckstats/logs/cleanup.log 2>&1' >> /etc/cron.d/ckstats \
     && chmod 0644 /etc/cron.d/ckstats
 
 # ── set path ──────────────────────────────────────────
