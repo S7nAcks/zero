@@ -19,9 +19,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         git \
         libtool \
         libzmq3-dev \
+        npm \
         pkg-config \
         yasm \
-    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && npm install -g pnpm \
     && rm -rf /var/lib/apt/lists/*
 
@@ -67,6 +67,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         curl \
         cron \
         nano \
+        npm \
         postgresql-client \
     && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y --no-install-recommends nodejs \
