@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libtool \
         libzmq3-dev \
         npm \
+        nodejs \
         pkg-config \
         yasm \
     && npm install -g pnpm \
