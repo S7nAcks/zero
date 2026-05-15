@@ -1,15 +1,11 @@
 # ═══════════════════════════════════════════════════════
-# ckpool + ckdb  —  built from official Bitbucket source
+# ckpool  —  built from official Bitbucket source
 # Target: linux/amd64  |  Base: Ubuntu 24.04 LTS
 # ═══════════════════════════════════════════════════════
 FROM ubuntu:24.04 AS builder
 
 # ── set directory ──────────────────────────────────────
 WORKDIR "/zero"
-
-# ── build-time args ────────────────────────────────────
-ARG REPO_URL="https://bitbucket.org/ckolivas/ckpool"
-ARG BRANCH="master"
 
 # ── build dependencies ─────────────────────────────────
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -22,13 +18,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libzmq3-dev \
         pkg-config \
         yasm \
-        libjansson-dev \
-        libssl-dev \
-        zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # ── fetch sources ──────────────────────────────────────
-RUN git clone --recursive --branch "${BRANCH}" "${REPO_URL}" "/zero/ckpool"
+RUN git clone --recursive --branch "master" "https://bitbucket.org/ckolivas/ckpool" "/zero/ckpool"
 
 # ── set directory ──────────────────────────────────────
 WORKDIR "/zero/ckpool"
@@ -36,13 +29,12 @@ WORKDIR "/zero/ckpool"
 # ── remove --no-recursive flag from autogen.sh ─────────
 RUN sed -i 's/--no-recursive//g' autogen.sh
 
-# ── build with ckdb support ────────────────────────────
+# ── build ckpool ───────────────────────────────────────
 RUN ./autogen.sh \
     && ./configure --prefix="/zero/ckpool" \
     && make -j"$(nproc)"
 
-# ── install to /zero/ckpool prefix ────────────────────
-# RUN make install DESTDIR="/staging"
+
 
 # ═══════════════════════════════════════════════════════
 # Runtime image — minimal
@@ -53,8 +45,7 @@ FROM ubuntu:24.04 AS runtime
 WORKDIR "/zero"
 
 # ── set label ──────────────────────────────────────────
-LABEL maintainer="S7nAcks/zero" \
-      description="ckpool + ckdb (official ckolivas source, amd64, Ubuntu 24.04)"
+LABEL maintainer="S7nAcks/zero" description="ckpool + ckdb (official ckolivas source, amd64, Ubuntu 24.04)"
 
 # ── runtime dependencies only ─────────────────────────
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -72,8 +63,7 @@ COPY --from=builder "/zero/ckpool/src/notifier"  "/zero/ckpool/notifier"
 # ── directories ───────────────────────────────────────
 RUN mkdir -p \
         "/zero/ckpool/log" \
-        "/zero/ckpool/sockets/ckpool" \
-        "/zero/ckpool/sockets/ckdb" \
+        "/zero/ckpool/sockets" \
     && chown -R ckpool:ckpool "/zero/ckpool"
 
 # PATH so binaries are callable without full path
