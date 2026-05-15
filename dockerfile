@@ -15,11 +15,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         automake \
         build-essential \
         ca-certificates \
+        curl \
         git \
         libtool \
         libzmq3-dev \
         pkg-config \
         yasm \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && npm install -g pnpm \
     && rm -rf /var/lib/apt/lists/*
 
@@ -81,7 +83,6 @@ RUN mkdir -p \
         "/zero/ckpool/sockets"
 
 COPY --from=builder "/zero/ckpool/src/ckpool"   "/zero/ckpool/ckpool"
-COPY --from=builder "/zero/ckpool/src/ckdb"     "/zero/ckpool/ckdb"
 COPY --from=builder "/zero/ckpool/src/ckpmsg"   "/zero/ckpool/ckpmsg"
 COPY --from=builder "/zero/ckpool/src/notifier" "/zero/ckpool/notifier"
 
@@ -118,4 +119,4 @@ EXPOSE 3333
 COPY entrypoint.sh "/zero/entrypoint.sh"
 RUN chmod +x "/zero/entrypoint.sh"
 
-ENTRYPOINT ["/zero/ckpool/entrypoint.sh"]
+ENTRYPOINT ["/zero/entrypoint.sh"]
